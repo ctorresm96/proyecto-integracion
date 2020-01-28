@@ -1,0 +1,23 @@
+CREATE TABLE public.facturas
+(
+    id character varying(20) NOT NULL,
+    "tipoComp" character varying(3) NOT NULL,
+    "codEstablecimiento" character varying(4) NOT NULL,
+    "numeroSerie" character varying(12) NOT NULL,
+    "tipoDoc" character varying(1) NOT NULL,
+    "nombreDoc" character varying(60) NOT NULL,
+    "direccionDoc" character varying(100) NOT NULL,
+    "codItem" character varying(100) NOT NULL,
+    "descripcionItem" character varying(200) NOT NULL,
+    "cantidadItem" numeric(200) NOT NULL,
+    "precioItem" numeric NOT NULL,
+    "igvItem" boolean NOT NULL,
+    total numeric NOT NULL,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public.facturas
+    OWNER to postgres;

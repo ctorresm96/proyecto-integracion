@@ -1,0 +1,13 @@
+{
+  "name": "registro-asistencia",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "~4.16.1",
+    "pg": "^7.14.0"
+  }
+}
