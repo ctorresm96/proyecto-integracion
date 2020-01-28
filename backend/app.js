@@ -9,7 +9,7 @@ const { Pool, Client } = require('pg')
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'asistenciabd',
+    database: 'core-sunat',
     password: 'postgres',
     port: 5432,
 })
@@ -93,6 +93,14 @@ app.post('/api/registrarEntrada', function(req, res) {
                 })
             }
         }
+    })
+});
+
+app.get('/api/registrarFactura', function(req, res) {
+    return res.status(200).json({
+        ok: false,
+        data: "No se eencuentra al trabajador en la BD",
+        error: 406
     })
 });
 

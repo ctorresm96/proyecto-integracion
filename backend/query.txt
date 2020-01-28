@@ -13,6 +13,8 @@ CREATE TABLE public.facturas
     "precioItem" numeric NOT NULL,
     "igvItem" boolean NOT NULL,
     total numeric NOT NULL,
+    estado numeric NOT NULL,
+    fecha date NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
