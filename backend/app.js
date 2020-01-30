@@ -30,70 +30,39 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/registrarEntrada', function(req, res) {
-    let query = 'SELECT * FROM empleados WHERE "SER_DOC_ID_ACT"=$1 OR "CODIGO_PERS"=$1';
-    let values = [req.body.codigo]
+app.post('/api/registrarFactura', function(req, res) {
+    let i = 0;
+    let count = 0;
+    for (i = 0; i < req.body.items.length; i++) {
+        let query = `INSERT INTO public.tp_factura(id, "tipoComp", "codEstablecimiento", "numeroSerie", 
+        "tipoDoc", "numeroDoc", "nombrePer","direccionPer", "codItem", "descripcionItem", "cantidadItem", "precioItem", 
+        "igv", total, estado, "fechaRegistro", "idFactura") VALUES (nextval('seq_facturas'), $1, $2, $3, $4, $5, $6, $7, $8, $9, 
+        $10, $11, $12, $13, $14, $15, $16)`
 
-    let day = new Date();
-    let horaCompleta = day.getHours() + ':' + day.getMinutes() + ':' + day.getSeconds();
+        let idFactura = `B${req.body.numeroSerie}${req.body.codEstablecimiento}`
 
-    pool.query(query, values, (err, trabajador) => {
-        if (err) {
-            return res.status(200).json({
-                mensaje: "Error de base de datos",
-                ok: false,
-                error: 503
-            })
-        } else {
-            if (trabajador.rows[0] != null) {
-                if (trabajador.rows[0].ASISTIO == false) {
-                    pool.query('UPDATE empleados SET "ASISTIO"= true WHERE "SER_DOC_ID_ACT"= \'' + trabajador.rows[0].SER_DOC_ID_ACT + '\'',
-                        (err, result) => {
-                            if (err) {
-                                return res.status(200).json({
-                                    mensaje: "Error de base de datos",
-                                    data: err,
-                                    error: 503,
-                                    ok: false
-                                })
-                            } else {
-                                pool.query(`UPDATE empleados SET "HORA_ENTRADA" = '${horaCompleta}' WHERE "SER_DOC_ID_ACT"= '${trabajador.rows[0].SER_DOC_ID_ACT}'  `,
-                                    (err, marcacion) => {
-                                        if (err) {
-                                            return res.status(200).json({
-                                                mensaje: "Error de base de datossssss",
-                                                data: err,
-                                                error: 503,
-                                                ok: false
-                                            })
-                                        } else {
-                                            console.log(trabajador.rows[0])
-                                            return res.status(200).json({
-                                                ok: true,
-                                                mensaje: "Asistencia marcada correctamente",
-                                                trabajador: trabajador.rows[0]
-                                            })
-                                        }
-                                    })
-                            }
-                        })
-                } else {
-                    return res.status(200).json({
-                        ok: false,
-                        mensaje: "El trabajador ya marcó su asistencia",
-                        error: 401,
-                        trabajador: trabajador.rows[0]
-                    })
-                }
+        let values = [
+            req.body.tipoComp, req.body.codEstablecimiento, req.body.numeroSerie, req.body.tipoDoc, req.body.numeroDoc,
+            req.body.nombrePer, req.body.direccionPer, req.body.items[0].codItem, req.body.items[i].descripcionItem,
+            req.body.items[0].cantidadItem, req.body.items[0].precioItem, req.body.igv, req.body.total, req.body.estado,
+            req.body.fechaRegistro, idFactura
+        ]
+
+        pool.query(query, values, (err, trabajador) => {
+            if (err) {
+                console.log(err)
             } else {
-                return res.status(200).json({
-                    ok: false,
-                    data: "No se eencuentra al trabajador en la BD",
-                    error: 406
-                })
+                console.log('row inserted')
             }
+        })
+        count = count + 1;
+        if (count == 2) {
+            return res.status(200).json({
+                ok: 'ok'
+            })
         }
-    })
+    }
+
 });
 
 app.get('/api/registrarFactura', function(req, res) {

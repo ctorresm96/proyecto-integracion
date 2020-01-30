@@ -1,25 +1,35 @@
-CREATE TABLE public.facturas
+CREATE TABLE public.tp_factura
 (
-    id character varying(20) NOT NULL,
-    "tipoComp" character varying(3) NOT NULL,
-    "codEstablecimiento" character varying(4) NOT NULL,
-    "numeroSerie" character varying(12) NOT NULL,
-    "tipoDoc" character varying(1) NOT NULL,
-    "nombreDoc" character varying(60) NOT NULL,
-    "direccionDoc" character varying(100) NOT NULL,
-    "codItem" character varying(100) NOT NULL,
-    "descripcionItem" character varying(200) NOT NULL,
-    "cantidadItem" numeric(200) NOT NULL,
+    id character varying NOT NULL,
+    "idFactura" character varying NOT NULL,
+    "tipoComp" numeric NOT NULL,
+    "codEstablecimiento" character varying NOT NULL,
+    "numeroSerie" character varying NOT NULL,
+    "tipoDoc" numeric NOT NULL,
+    "numeroDoc" character varying NOT NULL,
+    "nombrePer" character varying NOT NULL,
+    "direccionPer" character varying,
+    "codItem" character varying NOT NULL,
+    "descripcionItem" character varying NOT NULL,
+    "cantidadItem" numeric NOT NULL,
     "precioItem" numeric NOT NULL,
-    "igvItem" boolean NOT NULL,
+    igv boolean NOT NULL,
     total numeric NOT NULL,
     estado numeric NOT NULL,
-    fecha date NOT NULL,
+    "fechaRegistro" date NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
     OIDS = FALSE
 );
 
-ALTER TABLE public.facturas
+ALTER TABLE public.tp_factura
     OWNER to postgres;
+
+
+
+INSERT INTO public.tp_factura(
+id, "tipoComp", "codEstablecimiento", "numeroSerie", "tipoDoc", "numeroDoc", "nombrePer","direccionPer", "codItem", 
+"descripcionItem", "cantidadItem", "precioItem", "igv", total, estado, "fechaRegistro", "idFactura")
+VALUES (nextval('seq_facturas'), 1 , '967', '00000002', 1, '77034976', 'TORRES MORI, CARLOS ALBERTO', 'ASOC. RESIDENCIAL SAN JUAN BAUTISTA', 
+'P002', 'AVENA 3 OSITOS', 3, 10, true, 35, 1, '29-01-2020', 'B00000002967');
