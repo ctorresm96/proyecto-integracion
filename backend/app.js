@@ -30,39 +30,52 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/registrarFactura', function(req, res) {
-    let i = 0;
-    let count = 0;
-    for (i = 0; i < req.body.items.length; i++) {
-        let query = `INSERT INTO public.tp_factura(id, "tipoComp", "codEstablecimiento", "numeroSerie", 
-        "tipoDoc", "numeroDoc", "nombrePer","direccionPer", "codItem", "descripcionItem", "cantidadItem", "precioItem", 
-        "igv", total, estado, "fechaRegistro", "idFactura") VALUES (nextval('seq_facturas'), $1, $2, $3, $4, $5, $6, $7, $8, $9, 
-        $10, $11, $12, $13, $14, $15, $16)`
+app.post('/api/registrarFactura', async(req, res) => {
 
-        let idFactura = `B${req.body.numeroSerie}${req.body.codEstablecimiento}`
+    console.log(req.body)
 
-        let values = [
-            req.body.tipoComp, req.body.codEstablecimiento, req.body.numeroSerie, req.body.tipoDoc, req.body.numeroDoc,
-            req.body.nombrePer, req.body.direccionPer, req.body.items[0].codItem, req.body.items[i].descripcionItem,
-            req.body.items[0].cantidadItem, req.body.items[0].precioItem, req.body.igv, req.body.total, req.body.estado,
-            req.body.fechaRegistro, idFactura
-        ]
+    let query = `INSERT INTO public.tp_factura(id_tp_factura, idfactura, "tipoComp", "codEstablecimiento", "numeroSerie", 
+        "tipoDoc", "numeroDoc", "nombrePer","direccionPer", igv, total, estado, "fechaRegistro")
+        VALUES ( nextval('seq_facturas'), $1, $2, $3, $4, $5, $6, $7 , $8, $9, $10, $11, $12) RETURNING id_tp_factura`
 
-        pool.query(query, values, (err, trabajador) => {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log('row inserted')
-            }
-        })
-        count = count + 1;
-        if (count == 2) {
+    let idFactura = `B${req.body.numeroSerie}${req.body.codEstablecimiento}`
+
+    let values = [
+        idFactura, req.body.tipoComp, req.body.codEstablecimiento, req.body.numeroSerie, req.body.tipoDoc, req.body.numeroDoc,
+        req.body.nombrePer, req.body.direccionPer, req.body.igv, req.body.total, req.body.estado,
+        req.body.fechaRegistro
+    ]
+
+    pool.query(query, values, (err, factura) => {
+        if (err) {
             return res.status(200).json({
-                ok: 'ok'
+                ok: false,
+                msg: 'Error al generar una factura.'
+            })
+        } else {
+            let queryProd = `INSERT INTO public.ts_factura_detalle(
+                id_tp_factura, id_producto, nom_producto, cant_producto, precio_producto)
+                VALUES`
+            for (let i = 0; i < req.body.items.length; i++) {
+                let producto = req.body.items[i];
+                queryProd = queryProd + `(${factura.rows[0].id_tp_factura}, '${producto.codItem}', '${producto.descripcionItem}', ${producto.cantidadItem}, ${producto.precioItem}),`
+            }
+            queryProd = queryProd.slice(0, -1)
+            pool.query(queryProd, (err, item) => {
+                if (err) {
+                    return res.status(401).json({
+                        ok: false,
+                        msg: 'Error al registrar la factura',
+                    });
+                } else {
+                    return res.status(200).json({
+                        ok: true,
+                        msg: 'Se ingresó correctamente la factura'
+                    })
+                }
             })
         }
-    }
-
+    });
 });
 
 app.get('/api/registrarFactura', function(req, res) {

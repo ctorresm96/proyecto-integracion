@@ -1,35 +1,30 @@
-CREATE TABLE public.tp_factura
-(
-    id character varying NOT NULL,
-    "idFactura" character varying NOT NULL,
-    "tipoComp" numeric NOT NULL,
-    "codEstablecimiento" character varying NOT NULL,
-    "numeroSerie" character varying NOT NULL,
-    "tipoDoc" numeric NOT NULL,
-    "numeroDoc" character varying NOT NULL,
-    "nombrePer" character varying NOT NULL,
-    "direccionPer" character varying,
-    "codItem" character varying NOT NULL,
-    "descripcionItem" character varying NOT NULL,
-    "cantidadItem" numeric NOT NULL,
-    "precioItem" numeric NOT NULL,
-    igv boolean NOT NULL,
-    total numeric NOT NULL,
-    estado numeric NOT NULL,
-    "fechaRegistro" date NOT NULL,
-    PRIMARY KEY (id)
-)
-WITH (
-    OIDS = FALSE
+CREATE TABLE public.tp_factura (
+	id_tp_factura serial NOT NULL,
+	idfactura varchar NOT NULL,
+	"tipoComp" numeric NOT NULL,
+	"codEstablecimiento" varchar NOT NULL,
+	"numeroSerie" varchar NOT NULL,
+	"tipoDoc" numeric NOT NULL,
+	"numeroDoc" varchar NOT NULL,
+	"nombrePer" varchar NOT NULL,
+	"direccionPer" varchar NULL,
+	igv bool NOT NULL,
+	total numeric NOT NULL,
+	estado numeric NOT NULL,
+	"fechaRegistro" date NOT NULL,
+	CONSTRAINT tp_factura_pkey PRIMARY KEY (id_tp_factura)
 );
 
-ALTER TABLE public.tp_factura
-    OWNER to postgres;
+CREATE TABLE public.ts_factura_detalle (
+	id_tp_factura serial NOT NULL,
+	id_producto varchar(4) NOT NULL,
+	nom_producto varchar NOT NULL,
+	cant_producto int4 NULL,
+	precio_producto numeric NULL,
+	CONSTRAINT tp_factura_detalle_pk PRIMARY KEY (id_tp_factura, id_producto)
+);
 
+ALTER TABLE public.ts_factura_detalle 
+ADD CONSTRAINT tp_factura_detalle_fk FOREIGN KEY (id_tp_factura) 
+REFERENCES tp_factura(id_tp_factura);
 
-
-INSERT INTO public.tp_factura(
-id, "tipoComp", "codEstablecimiento", "numeroSerie", "tipoDoc", "numeroDoc", "nombrePer","direccionPer", "codItem", 
-"descripcionItem", "cantidadItem", "precioItem", "igv", total, estado, "fechaRegistro", "idFactura")
-VALUES (nextval('seq_facturas'), 1 , '967', '00000002', 1, '77034976', 'TORRES MORI, CARLOS ALBERTO', 'ASOC. RESIDENCIAL SAN JUAN BAUTISTA', 
-'P002', 'AVENA 3 OSITOS', 3, 10, true, 35, 1, '29-01-2020', 'B00000002967');
