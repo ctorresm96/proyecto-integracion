@@ -7,7 +7,7 @@ const { Pool, Client } = require('pg')
 
 // Credenciales BD Remota
 const pool = new Pool({
-    connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/core-sunat',
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/core-sunat',
     ssl: true
 })
 
