@@ -7,11 +7,8 @@ const { Pool, Client } = require('pg')
 
 // Credenciales BD Remota
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'core-sunat',
-    password: 'postgres',
-    port: 5432,
+    connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/core-sunat',
+    ssl: true
 })
 
 var app = express();
@@ -29,6 +26,12 @@ app.use((req, res, next) => {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
+
+app.get('/', (req, res) => {
+    return res.status(200).json({
+        msg: 'Hola mundo!'
+    })
+})
 
 app.post('/api/registrarFactura', async(req, res) => {
 
