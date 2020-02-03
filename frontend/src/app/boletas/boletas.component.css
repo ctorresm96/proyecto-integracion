@@ -1,40 +1,49 @@
 *:focus {
     outline: none;
-  }
-  
-  table {
+}
+
+table {
     width: 100%;
     background: whitesmoke;
-  }
-  
-  td,
-  th {
+}
+
+td,
+th {
     text-align: center;
     font-size: 13px;
-  }
-  
-  th {
+}
+
+th {
     font-weight: 600;
-  }
-  
-  .mat-column-idFactura {
+}
+
+.mat-column-idFactura {
     text-align: center !important;
     width: 10% !important;
-  }
+}
 
-  .mat-column-acciones {
+.mat-column-nombrePer {
+    text-align: center !important;
+    width: 20% !important;
+}
+
+.mat-column-numeroDoc {
+  text-align: center !important;
+  width: 8% !important;
+}
+
+.mat-column-acciones {
     text-align: center !important;
     width: 5% !important;
-  }
-  
-  .detalleIcon {
+}
+
+.detalleIcon {
     color: rgb(6, 37, 128);
     transition: all 0.1s ease-in-out;
-  }
-  
-  .detalleIcon:hover {
+}
+
+.detalleIcon:hover {
     cursor: pointer;
     color: rgb(19, 93, 252);
     transform: scale(1.6);
-  }
-  
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FacturacionService } from 'src/services/facturacion.service';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component';
 
 
 @Component({
@@ -9,14 +10,15 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
   styleUrls: ['./boletas.component.css']
 })
 export class BoletasComponent implements OnInit {
-  displayedColumns: string[] = ['idFactura', 'acciones'];
+  displayedColumns: string[] = ['idFactura', 'nombrePer', 'numeroDoc', 'acciones'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private _facturacionService: FacturacionService
+    private _facturacionService: FacturacionService,
+    public dialog: MatDialog
   ) {
 
   }
@@ -34,6 +36,17 @@ export class BoletasComponent implements OnInit {
         this.dataSource.sort = this.sort;
       }
     )
+  }
+
+  verDetalle(row) {
+    const dialogRef = this.dialog.open(ModalDetalleComponent, {
+      width: '250px',
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   applyFilter(filterValue: string) {

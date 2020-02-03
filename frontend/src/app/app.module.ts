@@ -9,12 +9,14 @@ import { HomeComponent } from './home/home.component';
 import { BoletasComponent } from './boletas/boletas.component';
 import { FacturasComponent } from './facturas/facturas.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalDetalleComponent } from './modal-detalle/modal-detalle.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     BoletasComponent,
-    FacturasComponent
+    FacturasComponent,
+    ModalDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalDetalleComponent]
 })
 export class AppModule { }
