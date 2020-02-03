@@ -1,0 +1,40 @@
+*:focus {
+    outline: none;
+  }
+  
+  table {
+    width: 100%;
+    background: whitesmoke;
+  }
+  
+  td,
+  th {
+    text-align: center;
+    font-size: 13px;
+  }
+  
+  th {
+    font-weight: 600;
+  }
+  
+  .mat-column-idFactura {
+    text-align: center !important;
+    width: 10% !important;
+  }
+
+  .mat-column-acciones {
+    text-align: center !important;
+    width: 5% !important;
+  }
+  
+  .detalleIcon {
+    color: rgb(6, 37, 128);
+    transition: all 0.1s ease-in-out;
+  }
+  
+  .detalleIcon:hover {
+    cursor: pointer;
+    color: rgb(19, 93, 252);
+    transform: scale(1.6);
+  }
+  

@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('', express.static(path.join(__dirname, './angular')));
+app.use('', express.static(path.join(__dirname, './frontend/dist/sunat-angular')));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -26,16 +26,14 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => {
-    return res.status(200).json({
-        msg: 'Hola mundo!'
-    })
-})
+// app.get('/', (req, res) => {
+//     return res.status(200).json({
+//         msg: 'Hola mundo!'
+//     })
+// })
 
 app.post('/api/registrarFactura', async(req, res) => {
-
-    console.log(req.body)
-
+    
     let query = `INSERT INTO tp_factura(id_tp_factura, idfactura, "tipoComp", "codEstablecimiento", "numeroSerie", 
         "tipoDoc", "numeroDoc", "nombrePer","direccionPer", igv, total, estado, "fechaRegistro")
         VALUES ( nextval('seq_facturas'), $1, $2, $3, $4, $5, $6, $7 , $8, $9, $10, $11, $12) RETURNING id_tp_factura`
@@ -86,10 +84,9 @@ app.get('/api/listarFacturas', function(req, res) {
 
     pool.query(query, (err, facturas) => {
         if (facturas) {
-            console.log(facturas)
             return res.status(200).json({
-                ok: truw,
-                data: "No se eencuentra al trabajador en la BD",
+                ok: true,
+                data: facturas.rows,
             })
         } else {
             return res.status(200).json({

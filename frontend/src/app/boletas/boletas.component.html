@@ -1,0 +1,35 @@
+<div style="padding: 20px 10px 50px 10px; margin: 0px auto">
+    <mat-form-field appearance="legacy">
+        <mat-label>Buscar...</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="mat-elevation-z2 mt-2">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="idFactura">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.idfactura}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <i class="material-icons"> drag_indicator </i>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <i class="material-icons detalleIcon"> settings </i>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+        </table>
+    </div>
+
+
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="mb-5"></mat-paginator>
+</div>
