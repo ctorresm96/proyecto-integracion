@@ -37,7 +37,7 @@ app.post('/api/registrarFactura', async(req, res) => {
 
     console.log(req.body)
 
-    let query = `INSERT INTO public.tp_factura(id_tp_factura, idfactura, "tipoComp", "codEstablecimiento", "numeroSerie", 
+    let query = `INSERT INTO tp_factura(id_tp_factura, idfactura, "tipoComp", "codEstablecimiento", "numeroSerie", 
         "tipoDoc", "numeroDoc", "nombrePer","direccionPer", igv, total, estado, "fechaRegistro")
         VALUES ( nextval('seq_facturas'), $1, $2, $3, $4, $5, $6, $7 , $8, $9, $10, $11, $12) RETURNING id_tp_factura`
 
@@ -56,7 +56,7 @@ app.post('/api/registrarFactura', async(req, res) => {
                 msg: 'Error al generar una factura.'
             })
         } else {
-            let queryProd = `INSERT INTO public.ts_factura_detalle(
+            let queryProd = `INSERT INTO ts_factura_detalle(
                 id_tp_factura, id_producto, nom_producto, cant_producto, precio_producto)
                 VALUES`
             for (let i = 0; i < req.body.items.length; i++) {
