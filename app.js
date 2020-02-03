@@ -7,8 +7,7 @@ const { Pool, Client } = require('pg')
 
 // Credenciales BD Remota
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/core-sunat',
-    ssl: true
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost/core-sunat',
 })
 
 var app = express();
@@ -82,11 +81,23 @@ app.post('/api/registrarFactura', async(req, res) => {
     });
 });
 
-app.get('/api/registrarFactura', function(req, res) {
-    return res.status(200).json({
-        ok: false,
-        data: "No se eencuentra al trabajador en la BD",
-        error: 406
+app.get('/api/listarFacturas', function(req, res) {
+    let query = 'SELECT * FROM tp_factura';
+
+    pool.query(query, (err, facturas) => {
+        if (facturas) {
+            console.log(facturas)
+            return res.status(200).json({
+                ok: truw,
+                data: "No se eencuentra al trabajador en la BD",
+            })
+        } else {
+            return res.status(200).json({
+                ok: false,
+                data: "No se eencuentra al trabajador en la BD",
+                error: err
+            })
+        }
     })
 });
 
