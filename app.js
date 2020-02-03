@@ -53,7 +53,8 @@ app.post('/api/registrarFactura', async(req, res) => {
         if (err) {
             return res.status(200).json({
                 ok: false,
-                msg: 'Error al generar una factura.'
+                msg: 'Error al generar una factura.',
+                error: err
             })
         } else {
             let queryProd = `INSERT INTO ts_factura_detalle(
@@ -92,5 +93,5 @@ app.get('/api/registrarFactura', function(req, res) {
 var port = process.env.PORT || 3000
 
 app.listen(port, function() {
-    console.log('Example app listening on port 3000!');
+    console.log(`Example app listening on port ${port}!`);
 });
