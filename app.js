@@ -135,28 +135,6 @@ app.get('/api/listarBoletas', function(req, res) {
     })
 });
 
-app.get('/api/listarFacturas', function(req, res) {
-    let query =
-        `SELECT * 
-        FROM tp_factura tp
-        ORDER BY tp."fechaRegistro" DESC`;
-
-    pool.query(query, (err, facturas) => {
-        if (facturas) {
-            return res.status(200).json({
-                ok: true,
-                data: facturas.rows,
-            })
-        } else {
-            return res.status(200).json({
-                ok: false,
-                data: "No se eencuentra al trabajador en la BD",
-                error: err
-            })
-        }
-    })
-});
-
 app.post('/api/detalleComprobante', function(req, res) {
     let id = req.body.idComprobante;
     let query =
