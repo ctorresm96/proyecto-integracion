@@ -1,0 +1,41 @@
+.mat-list-icon {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+*:focus {
+    outline: none;
+}
+
+.titulo {
+    color: rgba(0, 0, 0, 0.75);
+}
+
+mat-list-item {
+    margin-top: -20px;
+}
+
+button {
+    width: 150px;
+    text-transform: uppercase;
+}
+
+h3>span>div {
+    font-size: 13px;
+    text-align: center;
+}
+
+.estado {
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    background: rgb(198, 233, 134);
+}
+
+.expediente>span {
+    font-size: 13px;
+}
+
+.expediente {
+    margin-left: 10px;
+}
+

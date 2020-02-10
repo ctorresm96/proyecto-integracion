@@ -1,1 +1,54 @@
-<p>modal-detalle works!</p>
+<h3 mat-subheader class="titulo centradoVerticalLeft">
+    RESUMEN
+    <span class="expediente">
+        <span>(ID: </span>
+        <span> <b>{{detComp[0]?.idfactura}}</b>)</span>
+    </span>
+    <span class="spacer"></span>
+    <div class="mr-2" style="font-size: 12px;">
+        {{detComp[0]?.fechaRegistro |  date:'dd/MM/yyyy'}}
+    </div>
+    <span class="estado">
+        <div>
+            CORRECTO
+        </div>
+    </span>
+</h3>
+<mat-list>
+    <mat-divider></mat-divider>
+
+    <h3 mat-subheader>Datos del comprobante</h3>
+    <mat-list-item>
+        <mat-icon matListIcon>person</mat-icon>
+        <h4 matLine>{{detComp[0]?.nombrePer}}</h4>
+        <p matLine class="demo-2"> <b>DNI:</b> {{detComp[0]?.numeroDoc}} - <b>DIRECCION:</b>
+            {{detComp[0]?.direccionPer}}</p>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon matListIcon>account_balance_wallet</mat-icon>
+        <h4 matLine> <b>S/ {{detComp[0]?.total | number: '1.2'}}</b> </h4>
+        <p matLine class="demo-2"> Monto Total </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <h3 mat-subheader>Items del comprobante</h3>
+    <mat-list-item *ngFor="let item of detComp; let i = index">
+        <mat-icon matListIcon>arrow_forward</mat-icon>
+        <h4 matLine>
+            <span>{{detComp[i]?.nom_producto}}</span>
+        </h4>
+        <p matLine class="demo-2">
+            Cantidad: <b>{{detComp[i]?.cant_producto}}</b> /
+            Precio Unitario: <b>S/ {{detComp[i]?.precio_producto}}</b>
+        </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+</mat-list>
+
+<div class="centradoVertical mt-3">
+    <span class="spacer"></span>
+    <button mat-stroked-button color="primary" (click)="onNoClick()">
+        <i class="material-icons" style="font-size: 18px; margin-bottom: 3px; margin-right: 4px;">done</i>
+        Aceptar
+    </button>
+</div>

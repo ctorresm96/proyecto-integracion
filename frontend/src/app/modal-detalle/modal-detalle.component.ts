@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FacturacionService } from 'src/services/facturacion.service';
 
 @Component({
   selector: 'app-modal-detalle',
@@ -8,16 +9,31 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ModalDetalleComponent implements OnInit {
 
+  detComp: any[] = [];
+
   constructor(
     public dialogRef: MatDialogRef<ModalDetalleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _facturacionService: FacturacionService
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit() {
-    console.log(this.data)
+    this.getDetalle()
+  }
+
+  getDetalle() {
+    let item = {
+      idComprobante: this.data.id_tp_factura
+    }
+    this._facturacionService.getDetalle(item).subscribe(
+      (res: any) => {
+        this.detComp = res.data;
+      }
+    )
   }
 
 }

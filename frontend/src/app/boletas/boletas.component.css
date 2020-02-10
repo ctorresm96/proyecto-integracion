@@ -17,10 +17,21 @@ th {
     font-weight: 600;
 }
 
+.mat-column-fechaRegistro {
+    text-align: center !important;
+    width: 10% !important;
+}
+
 .mat-column-idFactura {
     text-align: center !important;
     width: 10% !important;
 }
+
+.mat-column-total {
+    text-align: center !important;
+    width: 10% !important;
+}
+
 
 .mat-column-nombrePer {
     text-align: center !important;
@@ -46,4 +57,8 @@ th {
     cursor: pointer;
     color: rgb(19, 93, 252);
     transform: scale(1.6);
+}
+
+mat-paginator{
+    margin: 0px !important;
 }

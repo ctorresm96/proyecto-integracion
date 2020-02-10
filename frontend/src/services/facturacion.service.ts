@@ -19,4 +19,15 @@ export class FacturacionService implements OnInit {
         return this.http.get(url, { headers: this.headers });
     }
 
+    getBoletas() {
+        const url = environment.URL_BACKEND + `/api/listarBoletas`;
+        return this.http.get(url, { headers: this.headers });
+    }
+
+    getDetalle(item) {
+        const url = environment.URL_BACKEND + `/api/detalleComprobante`;
+        return this.http.post(url, item, { headers: this.headers });
+    }
+
+
 }

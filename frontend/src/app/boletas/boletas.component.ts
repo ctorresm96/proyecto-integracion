@@ -3,14 +3,15 @@ import { FacturacionService } from 'src/services/facturacion.service';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component';
 
-
 @Component({
   selector: 'app-boletas',
   templateUrl: './boletas.component.html',
   styleUrls: ['./boletas.component.css']
 })
+
 export class BoletasComponent implements OnInit {
-  displayedColumns: string[] = ['idFactura', 'nombrePer', 'numeroDoc', 'acciones'];
+
+  displayedColumns: string[] = ['fechaRegistro', 'idFactura', 'total', 'nombrePer', 'numeroDoc', 'acciones'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -19,16 +20,14 @@ export class BoletasComponent implements OnInit {
   constructor(
     private _facturacionService: FacturacionService,
     public dialog: MatDialog
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this.listarBoletas();
   }
 
   listarBoletas() {
-    this._facturacionService.getFacturas().subscribe(
+    this._facturacionService.getBoletas().subscribe(
       (res: any) => {
         console.log(res.data)
         this.dataSource = new MatTableDataSource(res.data);
@@ -39,8 +38,9 @@ export class BoletasComponent implements OnInit {
   }
 
   verDetalle(row) {
+    
     const dialogRef = this.dialog.open(ModalDetalleComponent, {
-      width: '250px',
+      width: '650px',
       data: row
     });
 
