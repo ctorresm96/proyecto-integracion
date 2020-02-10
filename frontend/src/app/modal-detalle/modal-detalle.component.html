@@ -39,7 +39,7 @@
         </h4>
         <p matLine class="demo-2">
             Cantidad: <b>{{detComp[i]?.cant_producto}}</b> /
-            Precio Unitario: <b>S/ {{detComp[i]?.precio_producto}}</b>
+            Precio Unitario: <b>S/ {{detComp[i]?.precio_producto | number: '1.2'}}</b>
         </p>
     </mat-list-item>
     <mat-divider></mat-divider>
