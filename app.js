@@ -74,7 +74,7 @@ app.post('/api/registrarFactura', async(req, res) => {
                     } else {
                         return res.status(200).json({
                             ok: true,
-                            msg: 'Se ingresó correctamente el comprobante'
+                            msg: 'Se ingreso correctamente el comprobante'
                         })
                     }
                 })
@@ -105,7 +105,7 @@ app.get('/api/listarFacturas', function(req, res) {
         } else {
             return res.status(200).json({
                 ok: false,
-                data: "No se eencuentra al trabajador en la BD",
+                data: "No se encuentra al trabajador en la BD",
                 error: err
             })
         }
@@ -128,7 +128,7 @@ app.get('/api/listarBoletas', function(req, res) {
         } else {
             return res.status(200).json({
                 ok: false,
-                data: "No se eencuentra al trabajador en la BD",
+                data: "No se encuentra al trabajador en la BD",
                 error: err
             })
         }
@@ -154,7 +154,7 @@ app.post('/api/detalleComprobante', function(req, res) {
             console.log(err)
             return res.status(200).json({
                 ok: false,
-                data: "No se eencuentra al trabajador en la BD",
+                data: "No se encuentra al trabajador en la BD",
                 error: err
             })
         }
