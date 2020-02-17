@@ -11,6 +11,7 @@ import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component'
 
 export class BoletasComponent implements OnInit {
 
+  loading: boolean = false;
   displayedColumns: string[] = ['fechaRegistro', 'idFactura', 'total', 'nombrePer', 'numeroDoc', 'acciones'];
   dataSource: MatTableDataSource<any>;
 
@@ -27,8 +28,10 @@ export class BoletasComponent implements OnInit {
   }
 
   listarBoletas() {
+    this.loading = true
     this._facturacionService.getBoletas().subscribe(
       (res: any) => {
+        this.loading = false
         let boletas = res.data;
         boletas.map((element, index) => {
           boletas[index].fechaRegistro = new Date(boletas[index].fechaRegistro).setHours(new Date(boletas[index].fechaRegistro).getHours() + 6)

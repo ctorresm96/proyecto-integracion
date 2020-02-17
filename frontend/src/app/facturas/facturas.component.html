@@ -1,10 +1,18 @@
 <div style="padding: 20px 10px 50px 10px; margin: 0px auto">
-    <mat-form-field appearance="legacy">
-        <mat-label>Buscar...</mat-label>
-        <input matInput (keyup)="applyFilter($event.target.value)">
-        <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
-    
+
+    <div style="display: flex; align-items: center;">
+        <mat-form-field appearance="legacy">
+            <mat-label>Buscar...</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <span style="flex: 1 1 auto"></span>
+        <button mat-raised-button (click)="listarFacturas()" [disabled]="loading">
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+            <i class="material-icons mr-2">refresh</i> Actualizar
+        </button>
+    </div>
+
     <div class="mat-elevation-z2 mt-2">
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="mb-5"></mat-paginator>
         <table mat-table [dataSource]="dataSource">

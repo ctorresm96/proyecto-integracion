@@ -9,7 +9,7 @@ import { ModalDetalleComponent } from '../modal-detalle/modal-detalle.component'
   styleUrls: ['./facturas.component.css']
 })
 export class FacturasComponent implements OnInit {
-
+  loading = false;
   displayedColumns: string[] = ['fechaRegistro', 'idFactura', 'total', 'nombrePer', 'numeroDoc', 'acciones'];
   dataSource: MatTableDataSource<any>;
 
@@ -26,8 +26,10 @@ export class FacturasComponent implements OnInit {
   }
 
   listarFacturas() {
+    this.loading = true
     this._facturacionService.getFacturas().subscribe(
       (res: any) => {
+        this.loading = false
         let facturas = res.data;
         facturas.map((element, index) => {
           facturas[index].fechaRegistro = new Date(facturas[index].fechaRegistro).setHours(new Date(facturas[index].fechaRegistro).getHours() + 6)
