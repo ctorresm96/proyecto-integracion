@@ -29,8 +29,11 @@ export class BoletasComponent implements OnInit {
   listarBoletas() {
     this._facturacionService.getBoletas().subscribe(
       (res: any) => {
-        console.log('boletas', res.data)
-        this.dataSource = new MatTableDataSource(res.data);
+        let boletas = res.data;
+        boletas.map((element, index) => {
+          boletas[index].fechaRegistro = new Date(boletas[index].fechaRegistro).setHours(new Date(boletas[index].fechaRegistro).getHours() + 6)
+        })
+        this.dataSource = new MatTableDataSource(boletas);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }

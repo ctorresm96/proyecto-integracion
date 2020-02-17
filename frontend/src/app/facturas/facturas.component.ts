@@ -29,11 +29,10 @@ export class FacturasComponent implements OnInit {
     this._facturacionService.getFacturas().subscribe(
       (res: any) => {
         let facturas = res.data;
-        console.log(facturas)
         facturas.map((element, index) => {
-          return
+          facturas[index].fechaRegistro = new Date(facturas[index].fechaRegistro).setHours(new Date(facturas[index].fechaRegistro).getHours() + 6)
         })
-        this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource = new MatTableDataSource(facturas);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
