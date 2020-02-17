@@ -29,7 +29,7 @@ export class BoletasComponent implements OnInit {
   listarBoletas() {
     this._facturacionService.getBoletas().subscribe(
       (res: any) => {
-        console.log(res.data)
+        console.log('boletas', res.data)
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -38,7 +38,7 @@ export class BoletasComponent implements OnInit {
   }
 
   verDetalle(row) {
-    
+
     const dialogRef = this.dialog.open(ModalDetalleComponent, {
       width: '650px',
       data: row

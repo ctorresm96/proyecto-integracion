@@ -28,7 +28,11 @@ export class FacturasComponent implements OnInit {
   listarFacturas() {
     this._facturacionService.getFacturas().subscribe(
       (res: any) => {
-        console.log(res.data)
+        let facturas = res.data;
+        console.log(facturas)
+        facturas.map((element, index) => {
+          return
+        })
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
