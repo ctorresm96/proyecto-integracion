@@ -29,7 +29,6 @@ app.use((req, res, next) => {
 app.post('/api/registrarFactura', async (req, res) => {
 
     let body = req.body;
-
     if ((body.tipoComp == 1 && body.tipoDoc == 1 && body.numeroDoc.length == 8) || (body.tipoComp == 2 && body.tipoDoc == 2 && body.numeroDoc.length == 11)) {
         let query = `INSERT INTO tp_factura(id_tp_factura, idfactura, "tipoComp", "codEstablecimiento", "numeroSerie", 
         "tipoDoc", "numeroDoc", "nombrePer","direccionPer", igv, total, estado, "fechaRegistro")
