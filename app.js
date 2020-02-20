@@ -7,7 +7,7 @@ const { Pool, Client } = require('pg')
 
 // Credenciales BD Remota
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost/core-sunat',
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost/sunat-core',
 })
 
 var app = express();
@@ -26,13 +26,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.get('/', (req, res) => {
-//     return res.status(200).json({
-//         msg: 'Hola mundo!'
-//     })
-// })
-
-app.post('/api/registrarFactura', async(req, res) => {
+app.post('/api/registrarFactura', async (req, res) => {
 
     let body = req.body;
 
@@ -51,6 +45,7 @@ app.post('/api/registrarFactura', async(req, res) => {
 
         pool.query(query, values, (err, factura) => {
             if (err) {
+                console.log(err)
                 return res.status(200).json({
                     ok: false,
                     msg: 'Error al generar el comprobante.',
@@ -89,7 +84,7 @@ app.post('/api/registrarFactura', async(req, res) => {
 
 });
 
-app.get('/api/listarFacturas', function(req, res) {
+app.get('/api/listarFacturas', function (req, res) {
     let query =
         `SELECT * 
         FROM tp_factura tp
@@ -112,7 +107,7 @@ app.get('/api/listarFacturas', function(req, res) {
     })
 });
 
-app.get('/api/listarBoletas', function(req, res) {
+app.get('/api/listarBoletas', function (req, res) {
     let query =
         `SELECT * 
         FROM tp_factura tp
@@ -135,7 +130,7 @@ app.get('/api/listarBoletas', function(req, res) {
     })
 });
 
-app.post('/api/detalleComprobante', function(req, res) {
+app.post('/api/detalleComprobante', function (req, res) {
     let id = req.body.idComprobante;
     let query =
         `SELECT * 
@@ -163,6 +158,6 @@ app.post('/api/detalleComprobante', function(req, res) {
 
 var port = process.env.PORT || 3000
 
-app.listen(port, function() {
+app.listen(port, function () {
     console.log(`Example app listening on port ${port}!`);
 });
